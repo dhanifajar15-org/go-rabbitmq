@@ -1,0 +1,32 @@
+name: Lint
+on:
+  workflow_call:
+jobs:
+  #---------------------------------------------------------------------------------------------------------------------
+  # Lint
+  #---------------------------------------------------------------------------------------------------------------------
+  lint:
+    name: Lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        go-version:
+        - 1.15
+        os:
+        - ubuntu-latest
+    steps:
+      - name: Prepare
+        uses: actions/checkout@v3
+      - name: Set Up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Format
+        run: make lint
+
+#       - name: golangci-lint
+#         uses: golangci/golangci-lint-action@v3
+#         with:
+#           version: v1.54
+
+
